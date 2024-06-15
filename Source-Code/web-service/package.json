@@ -1,0 +1,31 @@
+{
+  "name": "mqtt-client-auth",
+  "version": "1.0.0",
+  "description": "HTTP backend to authorize MQTT clients",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "install-all": "npm install . && npm install . --prefix frontend",
+    "update-all": "npm update && npm update --prefix frontend",
+    "build": "npm run build --prefix frontend",
+    "server": "nodemon server.js",
+    "frontend": "cd frontend && npm run dev",
+    "dev": "concurrently \"npm run server\" \"npm run frontend\""
+  },
+  "author": "delta-12",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.20.1",
+    "concurrently": "^8.2.2",
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
+    "is-empty": "^1.2.0",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^6.8.3",
+    "nodemon": "^2.0.20",
+    "passport": "^0.7.0",
+    "passport-jwt": "^4.0.1",
+    "validator": "^13.7.0"
+  }
+}
