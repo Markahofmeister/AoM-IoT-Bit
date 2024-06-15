@@ -1,0 +1,12 @@
+syntax = "proto3";
+
+package nml;
+
+enum StatusState {
+    STATUS_STATE_OFFLINE = 0;
+    STATUS_STATE_ONLINE = 1;
+}
+
+message Status {
+    StatusState state = 1;
+}

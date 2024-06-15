@@ -1,0 +1,9 @@
+syntax = "proto3";
+
+package nml;
+
+import "channel.proto";
+
+message GetChannel {
+    repeated Channel channel = 1;
+}

@@ -1,0 +1,10 @@
+syntax = "proto3";
+
+package nml;
+
+import "channel.proto";
+
+message Configuration {
+    string name = 1;
+    repeated ChannelConfiguration channel_configuration = 2;
+}

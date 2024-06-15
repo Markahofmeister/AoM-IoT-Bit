@@ -1,0 +1,7 @@
+syntax = "proto3";
+
+package nml;
+
+message Heartbeat {
+    uint64 timestamp = 1;
+}

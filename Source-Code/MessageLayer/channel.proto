@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+package nml;
+
+enum ChannelType {
+    CHANNELTYPE_GENERIC_DIGITAL_OUTPUT = 0;
+    CHANNELTYPE_GENERIC_DIGITAL_INPUT = 1;
+    CHANNELTYPE_GENERIC_ANALOG_OUTPUT = 2;
+    CHANNELTYPE_GENERIC_ANALOG_INPUT = 3;
+}
+
+message ChannelConfiguration {
+    uint32 number = 1;
+    ChannelType type = 2;
+}
+
+message Channel {
+    uint32 number = 1;
+    uint32 state = 2;
+}

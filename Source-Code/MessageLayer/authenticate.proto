@@ -1,0 +1,9 @@
+syntax = "proto3";
+
+package nml;
+
+message Authenticate {
+    string user_uuid = 1;
+    string client_uuid = 2;
+    string token = 3;
+}

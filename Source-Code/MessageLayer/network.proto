@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+package nml;
+
+enum NetworkIpVersion {
+    NETWORK_IP_VERSION_IPV4 = 0;
+    NETWORK_IP_VERSION_IPV6 = 1;
+}
+
+message Network {
+    uint64 mac_address = 1;
+    NetworkIpVersion ip_version = 2;
+    bytes ip_address = 3;
+}

@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+package nml;
+
+enum WifiSecurity {
+    WIFI_SECURITY_WEP = 0;
+    WIFI_SECURITY_WPA = 1;
+    WIFI_SECURITY_WPA2 = 2;
+    WIFI_SECURITY_WPA3 = 3;
+}
+
+message Wifi {
+    string ssid = 1;
+    double signal_strength = 2;
+    WifiSecurity security = 3;
+}

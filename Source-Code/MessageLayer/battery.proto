@@ -1,0 +1,7 @@
+syntax = "proto3";
+
+package nml;
+
+message Battery {
+    double level = 1;
+}
