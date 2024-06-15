@@ -52,36 +52,25 @@ def signal_handler(signal_received, frame) -> None:
     sys_exit(0)
 
 
-signal(SIGINT, signal_handler)
-signal(SIGTERM, signal_handler)
-
-
-rabbitmq_client = RabbitMQClient(
-    MQTT_SERVER_HOST,
-    MQTT_SERVER_PORT,
-    UUID,
-    TOKEN,
-    MQTT_EXCHANGE,
-    queue=CONFIG_TOPIC,
-    routing_key=CONFIG_ROUTING_KEY,
-    on_message_callback=handle_messages,
-)
-
 if __name__ == "__main__":
+    signal(SIGINT, signal_handler)
+    signal(SIGTERM, signal_handler)
+
     assert DatabaseHandler_Services.add_service(UUID, TOKEN)
+
     while True:
+        rabbitmq_client = RabbitMQClient(
+            MQTT_SERVER_HOST,
+            MQTT_SERVER_PORT,
+            UUID,
+            TOKEN,
+            MQTT_EXCHANGE,
+            queue=CONFIG_TOPIC,
+            routing_key=CONFIG_ROUTING_KEY,
+            on_message_callback=handle_messages,
+        )
         rabbitmq_client.run()
         if rabbitmq_client.should_reconnect:
             rabbitmq_client.stop()
             logger.info("Reconnecting after %d seconds", RECONNECT_DELAY)
             sleep(RECONNECT_DELAY)
-            rabbitmq_client = RabbitMQClient(
-                MQTT_SERVER_HOST,
-                MQTT_SERVER_PORT,
-                UUID,
-                TOKEN,
-                MQTT_EXCHANGE,
-                queue=CONFIG_TOPIC,
-                routing_key=CONFIG_ROUTING_KEY,
-                on_message_callback=handle_messages,
-            )

@@ -1,0 +1,15 @@
+# version: "3.9"docker
+services:
+  python:
+    build:
+      dockerfile: client-configurator/Dockerfile
+      context: ../
+    environment:
+      - MONGOURI=${MONGOURI}
+      - PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION=python
+      - MQTT_SERVER_HOST=mqtt-server-rabbitmq-1
+      - MESSAGE_LAYER_PATH=../MessageLayer/out/python
+networks:
+  default:
+    name: rabbitnet
+    external: true
