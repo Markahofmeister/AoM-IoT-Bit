@@ -5,9 +5,14 @@
 
 # Test files
 test_*
+test
 
 # Vscode settings
 .vscode
+
+# CMake and build files
+build
+docker-build
 
 # Python
 env
@@ -19,10 +24,6 @@ __pycache__
 
 # Node.js
 node_modules
-
-# React Build
-Source-Code/Frontend/build
-Source-Code/Backend/web-user-auth/frontend
 
 # Sass / Css
 custom.css
