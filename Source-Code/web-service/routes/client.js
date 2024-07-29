@@ -9,6 +9,35 @@ const validateDeleteClient = require("../validation/delete_client")
 
 const router = express.Router()
 
+const buildNewClient = (user, req) => {
+    let channels = []
+    switch (req.body.type) {
+        case "0":
+            channels = [
+                {
+                    number: 0,
+                    type: 0
+                },
+                {
+                    number: 1,
+                    type: 0
+                }
+            ]
+            break
+        default:
+            break
+    }
+
+    const newClient = new Client({
+        name: req.body.name,
+        uuid: "client-" + crypto.randomUUID(),
+        user_uuid: user.uuid,
+        channels: channels
+    })
+
+    return newClient
+}
+
 // Register a new client
 router.post("/register", (req, res) => {
     // Check validation
@@ -22,12 +51,11 @@ router.post("/register", (req, res) => {
                 return res.status(404).json({ user_id: "User " + req.body.user_id + " does not exist" })
             }
             else {
-                const newClient = new Client({
-                    name: req.body.name,
-                    uuid: "client-" + crypto.randomUUID(),
-                    user_uuid: user.uuid,
-                    channels: []
-                })
+                const newClient = buildNewClient(user, req)
+                if (newClient.channels.length === 0) {
+                    console.log("Invalid client type.")
+                    return res.status(400).json({ error: { type: "Invalid type." } })
+                }
                 // Hash token before saving in database
                 bcrypt.genSalt(10, (err, salt) => {
                     if (err) throw err
@@ -80,8 +108,13 @@ router.post("/update", (req, res) => {
                         }
                         else {
                             client.name = req.body.name
-                            // TODO update channels
-                            console.log(req.body.channels)
+                            if (req.body.channels) {
+                                req.body.channels.forEach(channel => {
+                                    if (client.channels[channel.number].id === channel._id) {
+                                        client.channels[channel.number].type = channel.type
+                                    }
+                                })
+                            }
                             client.save()
                                 .then(updatedClient => {
                                     return res.status(200).json(updatedClient)
