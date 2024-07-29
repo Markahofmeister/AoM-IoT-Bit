@@ -14,6 +14,16 @@ if [ ! -d "$PYTHON_OUT_DIR" ]; then
 fi
 protoc -I $PWD --python_out=$PYTHON_OUT_DIR $PWD/*.proto
 
+echo "Generating protobufs for Javascript..."
+JS_OUT_DIR=$OUT_DIR/js
+if [ ! -d "$JS_OUT_DIR" ]; then
+    echo "Creating Javascript output directories"
+    mkdir -p $JS_OUT_DIR
+fi
+protoc -I $PWD --js_out=import_style=commonjs,binary:$JS_OUT_DIR $PWD/*.proto
+pbjs -t static-module $PWD/*.proto > $JS_OUT_DIR/MessageLayer.js
+
+
 echo "Generating message layer protobufs for C..."
 C_OUT_DIR=$OUT_DIR/c
 if [ ! -d "$C_OUT_DIR" ]; then

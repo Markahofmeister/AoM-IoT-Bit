@@ -1,14 +1,23 @@
-**/arduino_secrets_mine*
-
+# Media
 **/*.mov
 **/*.mp4
+*.MOV
 
 # Test files
 test_*
 test
 
-# Vscode settings
-.vscode
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
 
 # CMake and build files
 build
@@ -23,7 +32,15 @@ __pycache__
 *.dwl2
 
 # Node.js
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
 node_modules
+dist
+dist-ssr
+*.local
 
 # Sass / Css
 custom.css
@@ -37,8 +54,9 @@ mongo_uri_secret.yaml
 *_pb2.py
 *.pb.c
 *.pb.h
+out
 
-# Various Altium files
+# Altium
 *.PrjPCBStructure
 *.SchDocPreview
 *.PcbDocPreview
@@ -52,16 +70,17 @@ __Previews
 *.htm
 *.$$$
 
-#useless dirs
+# Project dirs
 Project\ Outputs
 Project\ Logs
 Project Outputs for*
 
-#History
+# History
 History
 
-#Exports, but not manual ones
+# Exports, but not manual ones
 exports/*
 !exports/manual
 
-*.MOV
+# Secrets
+**/arduino_secrets_mine*
