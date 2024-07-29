@@ -77,8 +77,8 @@ class DatabaseHandler_Clients:
             configuration.name = client.name
             for channel in client.channels:
                 channel_configuration = channel_pb2.ChannelConfiguration()
-                channel_configuration.number = channel.number
-                channel_configuration.type = channel.type
+                channel_configuration.number = channel["number"]
+                channel_configuration.type = channel["type"]
                 configuration.channel_configuration.append(channel_configuration)
         return None
 
