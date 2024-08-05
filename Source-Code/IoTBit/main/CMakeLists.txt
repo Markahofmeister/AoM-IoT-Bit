@@ -1,2 +1,2 @@
-idf_component_register(SRCS "IoTBit.c"
-                    INCLUDE_DIRS ".")
+idf_component_register(SRCS "IoTBit.c" "Mqtt.c"
+                    INCLUDE_DIRS "include")
