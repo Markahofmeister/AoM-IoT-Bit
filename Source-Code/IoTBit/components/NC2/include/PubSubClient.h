@@ -1,5 +1,5 @@
-#ifndef PUB_SUB_CLIENT
-#define PUB_SUB_CLIENT
+#ifndef PUB_SUB_CLIENT_H
+#define PUB_SUB_CLIENT_H
 
 #include <stdbool.h>
 #include <stdint.h>
@@ -14,9 +14,11 @@ typedef enum
 
 typedef struct
 {
-    char *Topic;
+    char *TopicBuffer;
+    size_t TopicBufferSize;
     size_t TopicSize;
-    uint8_t *Data;
+    uint8_t *DataBuffer;
+    size_t DataBufferSize;
     size_t DataSize;
 } PubSubClient_Message_t;
 
@@ -57,12 +59,6 @@ typedef struct
     bool Init;
     bool Connected;
 } PubSubClient_t;
-
-extern const PubSubClient_Message_t PubSubClient_MessageInitNull;
-extern const PubSubClient_Interface_t PubSubClient_InterfaceInitNull;
-extern const PubSubClient_Callbacks_t PubSubClient_CallbacksInitNull;
-extern const PubSubClient_Will_t PubSubClient_WillInitNull;
-extern const PubSubClient_t PubSubClient_InitNull;
 
 void PubSubClient_Init(PubSubClient_t *const client, char *const uri, char *const uuid, const PubSubClient_Interface_t interface);
 void PubSubClient_Deinit(PubSubClient_t *const client);

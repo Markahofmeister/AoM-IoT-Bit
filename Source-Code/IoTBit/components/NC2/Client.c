@@ -115,10 +115,12 @@ void Client_Update(Client_t *const client)
     {
         TopicHandler_Topic_t topic;
         PubSubClient_Message_t message = {
-            .Topic = client->TopicBuffer,
-            .TopicSize = client->TopicBufferSize,
-            .Data = client->DataBuffer,
-            .DataSize = client->DataBufferSize,
+            .TopicBuffer = client->TopicBuffer,
+            .TopicBufferSize = client->TopicBufferSize,
+            .TopicSize = 0UL,
+            .DataBuffer = client->DataBuffer,
+            .DataBufferSize = client->DataBufferSize,
+            .DataSize = 0UL,
         };
 
         if (PubSubClient_GetMessage(client->PubSubClient, &message) &&
@@ -235,9 +237,11 @@ static inline void Client_SetWill(Client_t *const client)
     if (pb_encode(&stream, nml_Status_fields, &nmlStatus))
     {
         PubSubClient_Message_t message = {
-            .Topic = client->TopicBuffer,
+            .TopicBuffer = client->TopicBuffer,
+            .TopicBufferSize = client->TopicBufferSize,
             .TopicSize = TopicHandler_StringLength(client->TopicBuffer),
-            .Data = client->DataBuffer,
+            .DataBuffer = client->DataBuffer,
+            .DataBufferSize = client->DataBufferSize,
             .DataSize = stream.bytes_written,
         };
 
@@ -337,9 +341,11 @@ static inline void Client_Publish(Client_t *const client, const TopicHandler_Top
     if (pb_encode(&stream, fields, srcStruct))
     {
         PubSubClient_Message_t message = {
-            .Topic = client->TopicBuffer,
+            .TopicBuffer = client->TopicBuffer,
+            .TopicBufferSize = client->TopicBufferSize,
             .TopicSize = TopicHandler_StringLength(client->TopicBuffer),
-            .Data = client->DataBuffer,
+            .DataBuffer = client->DataBuffer,
+            .DataBufferSize = client->DataBufferSize,
             .DataSize = stream.bytes_written,
         };
 

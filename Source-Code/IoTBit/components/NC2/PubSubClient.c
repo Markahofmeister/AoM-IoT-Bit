@@ -1,73 +1,5 @@
 #include "PubSubClient.h"
-
-const PubSubClient_Message_t PubSubClient_MessageInitNull = {
-    .Topic = NULL,
-    .TopicSize = 0UL,
-    .Data = NULL,
-    .DataSize = 0UL,
-};
-
-const PubSubClient_Interface_t PubSubClient_InterfaceInitNull = {
-    .Init = NULL,
-    .Deinit = NULL,
-    .Connect = NULL,
-    .Disconnect = NULL,
-    .Subscribe = NULL,
-    .Unsubscribe = NULL,
-    .Publish = NULL,
-    .GetMessage = NULL,
-};
-
-const PubSubClient_Callbacks_t PubSubClient_CallbacksInitNull = {
-    .OnConnect = NULL,
-    .OnPublish = NULL,
-    .OnSubscribe = NULL,
-    .OnReceive = NULL,
-};
-
-const PubSubClient_Will_t PubSubClient_WillInitNull = {
-    .Message = {
-        .Topic = NULL,
-        .TopicSize = 0UL,
-        .Data = NULL,
-        .DataSize = 0UL,
-    },
-    .Qos = PUBSUBCLIENT_QOS_0,
-    .Retained = false,
-};
-
-const PubSubClient_t PubSubClient_InitNull = {
-    .Uri = "\0",
-    .Uuid = "\0",
-    .Interface = {
-        .Init = NULL,
-        .Deinit = NULL,
-        .Connect = NULL,
-        .Disconnect = NULL,
-        .Subscribe = NULL,
-        .Unsubscribe = NULL,
-        .Publish = NULL,
-        .GetMessage = NULL,
-    },
-    .Callbacks = {
-        .OnConnect = NULL,
-        .OnPublish = NULL,
-        .OnSubscribe = NULL,
-        .OnReceive = NULL,
-    },
-    .Will = {
-        .Message = {
-            .Topic = NULL,
-            .TopicSize = 0UL,
-            .Data = NULL,
-            .DataSize = 0UL,
-        },
-        .Qos = PUBSUBCLIENT_QOS_0,
-        .Retained = false,
-    },
-    .Init = false,
-    .Connected = false,
-};
+#include "PubSubClientInit.h"
 
 static inline bool PubSubClient_CheckInterface(const PubSubClient_Interface_t *const interface);
 
@@ -75,7 +7,8 @@ void PubSubClient_Init(PubSubClient_t *const client, char *const uri, char *cons
 {
     if (client != NULL && uri != NULL)
     {
-        *client = PubSubClient_InitNull;
+        PubSubClient_t nullClient = PUBSUBCLIENT_INIT_NULL;
+        *client = nullClient;
         client->Uri = uri;
         client->Uuid = uuid;
 
@@ -97,7 +30,8 @@ void PubSubClient_Deinit(PubSubClient_t *const client)
     {
         if (client->Interface.Deinit())
         {
-            *client = PubSubClient_InitNull;
+            PubSubClient_t nullClient = PUBSUBCLIENT_INIT_NULL;
+            *client = nullClient;
         }
     }
 }
@@ -134,7 +68,7 @@ bool PubSubClient_Connect(PubSubClient_t *const client, const char *const token)
     {
         PubSubClient_Will_t *will = NULL;
 
-        if (client->Will.Message.Topic != NULL)
+        if (client->Will.Message.TopicBuffer != NULL)
         {
             will = &client->Will;
         }
